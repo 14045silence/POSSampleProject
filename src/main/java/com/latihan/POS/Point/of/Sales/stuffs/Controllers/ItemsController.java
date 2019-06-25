@@ -2,15 +2,16 @@ package com.latihan.POS.Point.of.Sales.stuffs.Controllers;
 
 import javax.validation.constraints.NotBlank;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.latihan.POS.Point.of.Sales.stuffs.Models.ItemsModel;
+import com.latihan.POS.Point.of.Sales.stuffs.simpleStatistics.BasicCalculations;
 
 
 @RestController
@@ -18,6 +19,20 @@ import com.latihan.POS.Point.of.Sales.stuffs.Models.ItemsModel;
 public class ItemsController {
 	private Integer originalStock=0;
 	private Integer resultStock=0;
+	
+	@Autowired
+	BasicCalculations basicMathUtils;
+	
+	@PostMapping("/stocks/sum")
+	public float allStocks(ItemsModel[] items) {
+		float[] setOfNumbers = null;
+		for(int index=0;index<items.length;index++) {
+			setOfNumbers[index]=items[index].getStock();
+		}
+		
+		return basicMathUtils.sum(setOfNumbers);
+	}
+	
 	@GetMapping("/")
 	public ItemsModel get_items() {
 		ItemsModel items = new ItemsModel();

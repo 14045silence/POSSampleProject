@@ -1,9 +1,16 @@
 package com.latihan.POS.Point.of.Sales.stuffs.Models;
 
+
 public class ItemsModel {
+	
 	private String id;
 	private String name;
 	private Integer stock;
+	
+	/** CONSTRUCTOR
+	 * 
+	 */
+//	public ItemsModel() {};
 	
 	public String getId() {
 		return id;
