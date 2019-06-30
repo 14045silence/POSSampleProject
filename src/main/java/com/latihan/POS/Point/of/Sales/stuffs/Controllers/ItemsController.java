@@ -29,7 +29,7 @@ public class ItemsController {
 	private static final Logger log = LoggerFactory.getLogger(ItemsController.class);
 	
 //	@Autowired //need to be enabled when you're using spring bean instead. but if you're not using spring based library then you have to disable it
-	BasicCalculations basicMathUtils;
+	BasicCalculations basicMathUtils=new BasicCalculations();
 	
 	@PostMapping(path="/stocks/sum")
 	public Float allStocks(@RequestBody List<ItemsModel> items) {
@@ -37,14 +37,10 @@ public class ItemsController {
 		
 		for(int index=0;index<items.size();index++) {
 			setOfNumbers.add((float) items.get(index).getStock());
+			log.warn(setOfNumbers.get(index)+"");
 		}
 		
-		if(setOfNumbers.size()>0) {
-			log.warn(""+setOfNumbers.size());
-			return basicMathUtils.sum(setOfNumbers);
-		}
-		
-		return (float)-1;
+		return basicMathUtils.sum(setOfNumbers);
 	}
 	
 	@GetMapping("/")
