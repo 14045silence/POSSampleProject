@@ -7,10 +7,6 @@ public class ItemsModel {
 	private String name;
 	private Integer stock;
 	
-	/** CONSTRUCTOR
-	 * 
-	 */
-//	public ItemsModel() {};
 	
 	public String getId() {
 		return id;
