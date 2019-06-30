@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.latihan.POS.Point.of.Sales.stuffs.Models.ItemsListModel;
 import com.latihan.POS.Point.of.Sales.stuffs.Models.ItemsModel;
 //import com.latihan.POS.Point.of.Sales.stuffs.simpleStatistics.BasicCalculations;
 
@@ -33,16 +32,15 @@ public class ItemsController {
 	BasicCalculations basicMathUtils;
 	
 	@PostMapping(path="/stocks/sum")
-	public Float allStocks(@RequestBody ItemsListModel items) {
+	public Float allStocks(@RequestBody List<ItemsModel> items) {
 		ArrayList<Float> setOfNumbers=new ArrayList<Float>();
-		List<ItemsModel> itemsList = items.getItems();
 		
-		for(int index=0;index<itemsList.size();index++) {
-			log.warn(""+itemsList.get(index).getStock());
-			setOfNumbers.add((float) itemsList.get(index).getStock());
+		for(int index=0;index<items.size();index++) {
+			setOfNumbers.add((float) items.get(index).getStock());
 		}
 		
 		if(setOfNumbers.size()>0) {
+			log.warn(""+setOfNumbers.size());
 			return basicMathUtils.sum(setOfNumbers);
 		}
 		
