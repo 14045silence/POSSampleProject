@@ -1,5 +1,7 @@
 package com.latihan.POS.Point.of.Sales.stuffs.Controllers;
 
+import java.util.ArrayList;
+
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +26,11 @@ public class ItemsController {
 	BasicCalculations basicMathUtils;
 	
 	@PostMapping("/stocks/sum")
-	public float allStocks(ItemsModel[] items) {
-		float[] setOfNumbers = null;
-		for(int index=0;index<items.length;index++) {
-			setOfNumbers[index]=items[index].getStock();
+	public Float allStocks(ArrayList<ItemsModel> items) {
+		ArrayList<Float> setOfNumbers=new ArrayList<Float>();
+		for(int index=0;index<items.size();index++) {
+			System.out.println("[DEBUG]");
+			setOfNumbers.add((float) items.get(index).getStock());
 		}
 		
 		return basicMathUtils.sum(setOfNumbers);
