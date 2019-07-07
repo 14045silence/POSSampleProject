@@ -1,3 +1,8 @@
+## INstallation
+1. set DB host, username & password on application.properties
+2. create empty DB with specified name in your postgreSQL
+3. RUN
+
 ### ROUTES
 
 #### items stock sum
@@ -7,6 +12,8 @@ curl -X POST http://localhost:8080/items/stocks/sum -d '[{"id":"1","name":"item2
 
 #### items
 GET /items/
+
+response is in itemsmodel
 
 #### item detail
 GET /items/{itemId}
@@ -21,7 +28,6 @@ Content-Type : application/json
 ##### request body
 ```
 {
-	"id":<string>,
 	"name":<string>,
 	"stock":<integer>
 }
