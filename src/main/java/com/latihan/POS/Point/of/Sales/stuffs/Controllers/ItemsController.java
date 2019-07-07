@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.latihan.POS.Point.of.Sales.stuffs.Models.ItemsModel;
+import com.latihan.POS.Point.of.Sales.stuffs.repositories.ItemsRepository;
 //import com.latihan.POS.Point.of.Sales.stuffs.simpleStatistics.BasicCalculations;
 
 
@@ -31,21 +32,23 @@ public class ItemsController {
 //	@Autowired //need to be enabled when you're using spring bean instead. but if you're not using spring based library then you have to disable it
 	BasicCalculations basicMathUtils=new BasicCalculations();
 	
+	@Autowired
+	ItemsRepository itemRepo;
+	
 	@PostMapping(path="/stocks/sum")
 	public Float allStocks(@RequestBody List<ItemsModel> items) {
 		ArrayList<Float> setOfNumbers=new ArrayList<Float>();
 		
 		for(int index=0;index<items.size();index++) {
 			setOfNumbers.add((float) items.get(index).getStock());
-			log.warn(setOfNumbers.get(index)+"");
 		}
 		
 		return basicMathUtils.sum(setOfNumbers);
 	}
 	
 	@GetMapping("/")
-	public ItemsModel get_items() {
-		ItemsModel items = new ItemsModel();
+	public List<ItemsModel> get_items() {
+		List<ItemsModel> items = (List<ItemsModel>) itemRepo.findAll();
 		return items;
 	}
 	
@@ -58,11 +61,8 @@ public class ItemsController {
 	
 	@PostMapping("/")
 	public ItemsModel add_item(@RequestBody ItemsModel itemInfo) {
-		ItemsModel item = new ItemsModel();
-		item.setId(itemInfo.getId());
-		item.setName(itemInfo.getName());
-		item.setStock(itemInfo.getStock());
-		return item;
+		itemRepo.save(itemInfo);
+		return itemInfo;
 	}
 	
 	@PostMapping("/{itemId}/stock")
